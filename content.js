@@ -1,7 +1,26 @@
-// Seleciona os elementos desejados
-const elements = document.querySelectorAll("#Introduction_Points")[0]
+// Pontos de introdução
+const elements2 = document.querySelectorAll("#Introduction_Points")[0]
   .parentElement.nextElementSibling.children;
 
+  // Serviços financeiros
+const elements3 = document.querySelectorAll("#Financial_Services")[0]
+  .parentElement.nextElementSibling.nextElementSibling.children;
+
+  // Serviços comerciais
+const elements4 = document.querySelectorAll("#Commercial_Services")[0]
+.parentElement.nextElementSibling.children;
+
+    // Serviços de domínio
+    const elements5 = document.querySelectorAll("#Domain_Services")[0]
+    .parentElement.nextElementSibling.children;
+
+        // Anonimato e segurança
+        const elements6 = document.getElementById("Anonymity_.26_Security")
+        .parentElement.nextElementSibling.children;
+
+        // Versões da Darknet de sites populares
+        const elements = document.getElementById("Darknet_versions_of_popular_sites")
+        .parentElement.nextElementSibling.children;
 // Array para armazenar os dados
 const sites = [];
 
