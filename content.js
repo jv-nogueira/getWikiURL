@@ -1,43 +1,53 @@
-// Pontos de introdução
-const elements2 = document.querySelectorAll("#Introduction_Points")[0]
-  .parentElement.nextElementSibling.children;
+var index = 0;
+const sites = []; // Array global para armazenar os dados coletados
 
-  // Serviços financeiros
-const elements3 = document.querySelectorAll("#Financial_Services")[0]
-  .parentElement.nextElementSibling.nextElementSibling.children;
+title();
 
-  // Serviços comerciais
-const elements4 = document.querySelectorAll("#Commercial_Services")[0]
-.parentElement.nextElementSibling.children;
+function title() {
+  const listLimit = document.querySelectorAll('ul').length;
 
-    // Serviços de domínio
-    const elements5 = document.querySelectorAll("#Domain_Services")[0]
-    .parentElement.nextElementSibling.children;
+  if (index < listLimit) {
+    const firstSibling = document.querySelectorAll('ul')[index]
 
-        // Anonimato e segurança
-        const elements6 = document.getElementById("Anonymity_.26_Security")
-        .parentElement.nextElementSibling.children;
+    if (firstSibling) {
+      console.log("O primeiro título é verdade");
+            // Usa try-catch para acessar o texto do título
+            let head;
+            try {
+              head = document.querySelectorAll('ul')[index].previousElementSibling.textContent.trim();
+            } catch (error) {
+              console.error(`Erro ao acessar o título no índice ${index}:`, error);
+              head = "Sem head"; // Valor padrão em caso de erro
+            }
+      itemsList(firstSibling.children, head);
+    } 
+      index++; // Incrementa para o próximo cabeçalho
+    title(); // Chama recursivamente a função
+  
+  } else {
+    // Quando terminar de percorrer os cabeçalhos, salva os dados
+    salvarComoTxt(sites);
+  }
+}
 
-        // Versões da Darknet de sites populares
-        const elements = document.getElementById("Darknet_versions_of_popular_sites")
-        .parentElement.nextElementSibling.children;
-// Array para armazenar os dados
-const sites = [];
+function itemsList(elements, head) {
+  // Itera pelos elementos e coleta os dados
+  for (let i = 0; i < elements.length; i++) {
+    const nome = elements[i].children[0]?.textContent.trim() || "Sem Nome"; // Nome do site
+    const descricao = elements[i].childNodes[1]?.textContent.trim() || "Sem Descrição"; // Descrição
+    const link = elements[i].children[0]?.href || "Sem Link"; // Link do site
 
-// Itera pelos elementos e coleta os dados
-for (let i = 0; i < elements.length; i++) {
-  const nome = elements[i].children[0]?.textContent.trim() || "Sem Nome"; // Nome do site
-const descricao = elements[i].childNodes[1]?.textContent.trim() || "Sem Descrição"; // Descrição
-  const link = elements[i].children[0]?.href || "Sem Link"; // Link do site
+    // Adiciona os dados ao array global
+    sites.push([head, nome, descricao, link]);
+  }
 
-  // Adiciona os dados ao array
-  sites.push([nome, descricao, link]);
 }
 
 // Função para criar e salvar o arquivo .txt
 function salvarComoTxt(dados) {
   // Converte os dados em texto com separadores de tabulação (\t) e nova linha (\n)
-  const texto = dados.map(linha => linha.join("\t")).join("\n");
+  const cabecalho = "Categorias\tSite\tFunção\tLink\n";
+  const texto = cabecalho + dados.map(linha => linha.join("\t")).join("\n");
 
   // Cria o Blob com o texto
   const blob = new Blob([texto], { type: "text/plain" });
@@ -52,6 +62,3 @@ function salvarComoTxt(dados) {
   // Libera a URL do Blob após o download
   URL.revokeObjectURL(url);
 }
-
-// Chama a função para salvar os dados
-salvarComoTxt(sites);
