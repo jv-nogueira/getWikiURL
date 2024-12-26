@@ -14,7 +14,13 @@ function title() {
             // Usa try-catch para acessar o texto do título
             let head;
             try {
-              head = document.querySelectorAll('ul')[index].previousElementSibling.textContent.trim();
+
+              if(document.querySelectorAll('ul')[index].previousElementSibling.tagName == 'H2'||'H4'){
+                head = document.querySelectorAll('ul')[index].previousElementSibling.textContent.trim();
+              }else{
+                head = document.querySelectorAll('ul')[index].previousElementSibling.previousElementSibling.textContent.trim()
+              }
+              
             } catch (error) {
               console.error(`Erro ao acessar o título no índice ${index}:`, error);
               head = "Sem head"; // Valor padrão em caso de erro
